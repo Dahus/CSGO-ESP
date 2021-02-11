@@ -25,7 +25,7 @@ DWORD GetProcId(const wchar_t* procName)
 		{
 			do
 			{
-				if (!_wcsicmp(procEntry.szExeFile, procName)) //занимается отрисовкой
+				if (!_wcsicmp(procEntry.szExeFile, procName))
 				{
 					procId = procEntry.th32ProcessID;
 					break;
