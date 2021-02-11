@@ -26,7 +26,7 @@ DWORD GetProcId(const wchar_t* procName)
 		{
 			do
 			{
-				if (!_wcsicmp(procEntry.szExeFile, procName))
+				if (!_wcsicmp(procEntry.szExeFile, procName)) //занимается отрисовкой
 				{
 					procId = procEntry.th32ProcessID;
 					break;
@@ -68,13 +68,13 @@ HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, NULL, GetProcId(L"csgo.exe"));
 HDC hdc = GetDC(FindWindowA(NULL, "Counter-Strike: Global Offensive"));
 
 template<typename T> T RPM(SIZE_T address) {
-	//The buffer for data that is going to be read from memory
+	//Буфер для данных, которые будут считываться из памяти
 	T buffer;
 
-	//The actual RPM
+	//Фактическая RPM
 	ReadProcessMemory(hProcess, (LPCVOID)address, &buffer, sizeof(T), NULL);
 
-	//Return our buffer
+	//Возвращение нашего буфера
 	return buffer;
 }
 
@@ -118,20 +118,20 @@ void DrawFilledRect(int x, int y, int w, int h)
 
 void DrawBorderBox(int x, int y, int w, int h, int thickness)
 {
-	DrawFilledRect(x, y, w, thickness); //Top horiz line
-	DrawFilledRect(x, y, thickness, h); //Left vertical line
-	DrawFilledRect((x + w), y, thickness, h); //right vertical line
-	DrawFilledRect(x, y + h, w + thickness, thickness); //bottom horiz line
+	DrawFilledRect(x, y, w, thickness); //Линия верхнего горизонта
+	DrawFilledRect(x, y, thickness, h); //Левая вертикальная линия
+	DrawFilledRect((x + w), y, thickness, h); //правая вертикальная линия
+	DrawFilledRect(x, y + h, w + thickness, thickness); //нижняя линия горизонта
 }
 
 void DrawLine(float StartX, float StartY, float EndX, float EndY)
 {
 	int a, b = 0;
 	HPEN hOPen;
-	HPEN hNPen = CreatePen(PS_SOLID, 2, EnemyPen);// penstyle, width, color
+	HPEN hNPen = CreatePen(PS_SOLID, 2, EnemyPen);// стиль, ширина, цвет
 	hOPen = (HPEN)SelectObject(hdc, hNPen);
-	MoveToEx(hdc, StartX, StartY, NULL); //start
-	a = LineTo(hdc, EndX, EndY); //end
+	MoveToEx(hdc, StartX, StartY, NULL); //начало
+	a = LineTo(hdc, EndX, EndY); //конец
 	DeleteObject(SelectObject(hdc, hOPen));
 }
 
@@ -159,9 +159,9 @@ int main()
 			float height = screenhead.y - screenpos.y;
 			float width = height / 2.4f;
 
-			if (screenpos.z >= 0.01f && team != localteam && health > 0 && health < 101) {
-				DrawBorderBox(screenpos.x - (width / 2), screenpos.y, width, height, 1);
-				DrawLine(screenX / 2, screenY, screenpos.x, screenpos.y);
+			if (screenpos.z >= 0.01f && team != localteam /*отв. за обводку своей кмд. */ && health > 0 && health < 101) {
+				DrawBorderBox(screenpos.x - (width / 2), screenpos.y, width, height, 1); //Прямоугольная обводка других игроков
+				DrawLine(screenX / 2, screenY, screenpos.x, screenpos.y); //Рисующиеся оси от игрока к другим игрокам
 			}
 		}
 	}
