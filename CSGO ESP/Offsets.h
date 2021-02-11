@@ -1,4 +1,4 @@
-//Offesets version 09.02.2021
+//Версия оффсетов 09.02.2021
 
 #pragma once
 #define dwEntityList 0x4DA2F44

@@ -3,9 +3,8 @@
 #include <Windows.h>
 #include <TlHelp32.h>
 
-/* SexOffenderSally helped code a lot/most of this with me, a long time friend! Give him a <3 on discord
-Make sure character set is 'Multi-Byte' in project settings! And game must be windowed fullscreen.
-Updated offsets: https://github.com/frk1/hazedumper/blob/master/csgo.cs     */
+/* Убедитесь, что в настройках проекта установлен «Многобайтный» набор символов! И игра должна быть в полноэкранным окне, либо просто в окне.
+Обновленные смещения: https://github.com/frk1/hazedumper/blob/master/csgo.cs */
 
 #define EnemyPen 0x000000FF
 HBRUSH EnemyBrush = CreateSolidBrush(0x000000FF);
@@ -159,7 +158,7 @@ int main()
 			float height = screenhead.y - screenpos.y;
 			float width = height / 2.4f;
 
-			if (screenpos.z >= 0.01f && team != localteam /*отв. за обводку своей кмд. */ && health > 0 && health < 101) {
+			if (screenpos.z >= 0.01f && team != localteam /*отв. за обводить свою кмд. или нет*/ && health > 0 && health < 101) {
 				DrawBorderBox(screenpos.x - (width / 2), screenpos.y, width, height, 1); //Прямоугольная обводка других игроков
 				DrawLine(screenX / 2, screenY, screenpos.x, screenpos.y); //Рисующиеся оси от игрока к другим игрокам
 			}
